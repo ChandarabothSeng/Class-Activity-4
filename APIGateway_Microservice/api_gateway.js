@@ -11,6 +11,8 @@ const PORT = 4000;
 
 const ADMIN_SERVICE = 'http://localhost:5001';
 const USER_SERVICE = 'http://localhost:5000';
+const LOGIN_SERVICE = 'http://localhost:5002';
+const REGISTRATION_SERVICE = 'http://localhost:5003';
 
 app.use(express.json());
 
@@ -65,6 +67,19 @@ function forwardRequest(req, res, target) {
     }
 }
 
+// Registration Microservice
+app.use('/registration', (req, res) => {
+    console.log('INSIDE API GATEWAY REGISTRATION ROUTE');
+    forwardRequest(req, res, REGISTRATION_SERVICE);
+});
+
+// Login Microservice
+app.use('/login', (req, res) => {
+    console.log('INSIDE API GATEWAY LOGIN ROUTE');
+    forwardRequest(req, res, LOGIN_SERVICE);
+});
+
+// Admin Microservice
 app.use('/admin', authenticateToken, (req, res) => {
     if (req.user.role !== 'admin') {
         return res.status(403).json({
@@ -72,9 +87,11 @@ app.use('/admin', authenticateToken, (req, res) => {
         });
     }
 
+    console.log('INSIDE API GATEWAY ADMIN ROUTE');
     forwardRequest(req, res, ADMIN_SERVICE);
 });
 
+// User Microservice
 app.use('/user', authenticateToken, (req, res) => {
     if (req.user.role !== 'user') {
         return res.status(403).json({
@@ -82,6 +99,7 @@ app.use('/user', authenticateToken, (req, res) => {
         });
     }
 
+    console.log('INSIDE API GATEWAY USER ROUTE');
     forwardRequest(req, res, USER_SERVICE);
 });
 
