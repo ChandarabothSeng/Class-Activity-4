@@ -9,8 +9,8 @@ const proxy = httpProxy.createProxyServer();
 
 const PORT = 4000;
 
-const ADMIN_SERVICE = 'http://localhost:5001';
-const USER_SERVICE = 'http://localhost:5000';
+const ADMIN_SERVICE = 'http://3.83.96.204:5001';
+const USER_SERVICE = 'http://44.211.156.145:5000';
 const LOGIN_SERVICE = 'http://localhost:5002';
 const REGISTRATION_SERVICE = 'http://localhost:5003';
 
